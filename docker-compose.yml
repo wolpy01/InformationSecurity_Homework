@@ -1,0 +1,17 @@
+version: '3'
+
+services:
+    mongo:
+        image: 'mongo:4.4.7'
+        restart: always
+        environment:
+            - MONGODB_DATABASE=admin
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=root
+        ports:
+            - 27017:27017
+        volumes:
+            - data:/data/db
+
+volumes:
+    data:
