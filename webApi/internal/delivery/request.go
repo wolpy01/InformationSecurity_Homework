@@ -111,6 +111,7 @@ func RepeatRequest(transaction domain.HTTPTransaction) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	transport := &http.Transport{
 		Proxy: http.ProxyURL(proxyURL),
 	}
@@ -122,6 +123,7 @@ func RepeatRequest(transaction domain.HTTPTransaction) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
+
 	query := u.Query()
 	for key, value := range transaction.Request.GetParams {
 		query.Add(key, value)
@@ -130,7 +132,7 @@ func RepeatRequest(transaction domain.HTTPTransaction) (*http.Response, error) {
 
 	req, err := http.NewRequest(transaction.Request.Method,
 		transaction.Request.Protocol+"://"+u.String(),
-		bytes.NewBuffer(transaction.Response.RawBody))
+		bytes.NewBuffer(transaction.Request.RawBody))
 	if err != nil {
 		return nil, err
 	}

@@ -14,6 +14,7 @@ import (
 // for incoming TLS connections in place of the upstream server's
 // certificate.
 func (p *Proxy) serveConnect(w http.ResponseWriter, r *http.Request) {
+	r.Header.Del("Accept-Encoding")
 	var (
 		err        error
 		targetConn *tls.Conn
