@@ -2,7 +2,7 @@
 
 ### Запуск прокси-сервера с https в Docker с хранением запросов в MongoDB
 - Запустить `sudo docker-compose up`
-- Собрать бинарный файл Go `make -B build`
+- Собрать бинарный файл Go `sh build.sh`
 - Запустить `./build/proxy/out`
 - Скопировать сертификаты `sudo cp ~/.mitm/ca-cert.pem /usr/local/share/ca-certificates/ca-cert.crt`
 - Обновить сертификаты `sudo update-ca-certificates`

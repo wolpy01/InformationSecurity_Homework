@@ -80,7 +80,7 @@ func (h *Handler) RepeatByID(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Error to get transaction by id"))
 		return
 	}
-
+	
 	resRepeat, err := RepeatRequest(transaction)
 	if err != nil {
 		log.Println(err)
@@ -122,12 +122,13 @@ func RepeatRequest(transaction domain.HTTPTransaction) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	log.Println(u)
 	query := u.Query()
 	for key, value := range transaction.Request.GetParams {
 		query.Add(key, value)
 	}
 	u.RawQuery = query.Encode()
+	log.Println(query)
 
 	req, err := http.NewRequest(transaction.Request.Method,
 		transaction.Request.Protocol+"://"+u.String(),
@@ -135,6 +136,7 @@ func RepeatRequest(transaction domain.HTTPTransaction) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Println("Made request")
 
 	for key, value := range transaction.Request.Headers {
 		req.Header.Set(key, value)
@@ -148,6 +150,7 @@ func RepeatRequest(transaction domain.HTTPTransaction) (*http.Response, error) {
 	if err != nil {
 		return nil, err
 	}
+	log.Println("Got response")
 
 	return resp, nil
 }
