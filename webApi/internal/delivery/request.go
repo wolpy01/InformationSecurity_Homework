@@ -33,6 +33,7 @@ func (h *Handler) Requests(w http.ResponseWriter, r *http.Request) {
 			ID:            tr.ID.(string),
 			Host:          tr.Request.Host,
 			Method:        tr.Request.Method,
+			Headers:       tr.Request.Headers,
 			Path:          tr.Request.Path,
 			StatusCode:    tr.Response.StatusCode,
 			ContentLenght: tr.Response.ContentLenght,
@@ -80,7 +81,7 @@ func (h *Handler) RepeatByID(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("Error to get transaction by id"))
 		return
 	}
-	
+
 	resRepeat, err := RepeatRequest(transaction)
 	if err != nil {
 		log.Println(err)
@@ -89,20 +90,13 @@ func (h *Handler) RepeatByID(w http.ResponseWriter, r *http.Request) {
 		return
 
 	}
-	res, err := json.Marshal(map[string]interface{}{
-		"body": map[string]interface{}{
-			"current_request_id":  resRepeat.Header[resHeaderTransactionID][0],
-			"repeated_request_id": id,
-			"status_code":         resRepeat.Status,
-			"content_length":      resRepeat.ContentLength,
-		},
-	})
 
+	err = resRepeat.Write(w)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
+		return
 	}
 
-	w.Write(res)
 	w.WriteHeader(http.StatusOK)
 }
 
