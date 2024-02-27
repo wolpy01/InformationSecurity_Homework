@@ -2,7 +2,10 @@ module proxyServer
 
 go 1.21.1
 
-require go.mongodb.org/mongo-driver v1.14.0
+require (
+	github.com/gorilla/mux v1.8.1
+	go.mongodb.org/mongo-driver v1.14.0
+)
 
 require (
 	github.com/golang/snappy v0.0.1 // indirect
