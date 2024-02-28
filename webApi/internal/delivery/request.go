@@ -165,6 +165,7 @@ func (h *Handler) ScanByID(w http.ResponseWriter, r *http.Request) {
 
 	transactionsIDs := []string{}
 
+	// Подстановка уязвимости в GET-параметры
 	for key, value := range transaction.Request.GetParams {
 		transaction.Request.GetParams[key] = `vulnerable'"><img src onerror=alert()>`
 		resRepeat, err := RepeatRequest(transaction)
@@ -189,7 +190,7 @@ func (h *Handler) ScanByID(w http.ResponseWriter, r *http.Request) {
 		}
 		transaction.Request.GetParams[key] = value
 	}
-
+	// Подстановка уязвимости в POST-параметры
 	for key, value := range transaction.Request.PostParams {
 		transaction.Request.PostParams[key] = `vulnerable'"><img src onerror=alert()>`
 		resRepeat, err := RepeatRequest(transaction)
