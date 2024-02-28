@@ -36,6 +36,7 @@ func main() {
 	r.HandleFunc("/requests", handler.Requests)
 	r.HandleFunc("/requests/{id}", handler.RequestByID)
 	r.HandleFunc("/repeat/{id}", handler.RepeatByID)
+	r.HandleFunc("/scan/{id}", handler.ScanByID)
 
 	log.Println("web-api :8000")
 	log.Fatal(http.ListenAndServe(":8000", r))
